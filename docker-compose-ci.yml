@@ -1,0 +1,39 @@
+version: "3.4"
+services:
+  app:
+    container_name: ${COMPOSE_PROJECT_NAME}_app
+    image: docker.local/rundax/minter/node_monitoring/app:${CI_COMMIT_REF_SLUG}
+    stop_signal: INT
+    user: 1000:1000
+    tty: true
+    volumes:
+      - ./.docker/app/MinterNode/config/:/minter/config/:rw
+      - ./.docker/app/MinterNode/bin/:/minter/bin:ro
+      - minter_data:/minter/data/
+      - tendermint_data:/minter/tmdata/
+
+      - ./app/:/app/:rw
+
+    env_file:
+      - .env
+#    ports:
+#      - ${NODE_API_PORT}:8841
+#      - ${NODE_GUI_PORT}:3000
+#      - ${APP_API_PORT:-4000}:4000
+
+  redis:
+    container_name: ${COMPOSE_PROJECT_NAME}_redis
+    image: redis:4
+    command: 'redis-server /usr/local/etc/redis/redis.conf --loglevel verbose'
+    volumes:
+      - ./.docker/redis/config/redis.conf:/usr/local/etc/redis/redis.conf:ro
+      - redis_data:/data/:rw
+#    ports:
+#      - ${REDIS_PORT}:6379
+#
+
+
+volumes:
+  redis_data:
+  minter_data:
+  tendermint_data:

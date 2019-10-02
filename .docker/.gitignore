@@ -1,0 +1,16 @@
+*/data/*
+!*/data/.gitkeep
+
+*/logs/*
+!*/logs/.gitkeep
+
+app/MinterNode/data/*
+!app/MinterNode/data/.gitkeep
+app/MinterNode/logs/*
+!app/MinterNode/logs/.gitkeep
+app/MinterNode/tmdata/*
+!app/MinterNode/tmdata/.gitkeep
+app/MinterNode/config/*
+!app/MinterNode/config/config.toml
+
+
