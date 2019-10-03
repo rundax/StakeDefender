@@ -65,9 +65,9 @@ export class NodeApi {
                 message: 'Auto Off',
             });
             let txHash:Promise<string> = this.minterSDK.postTx(txParams);
-            txHash.then((string) => {
-                Core.info('Send setCandidateOff. Transaction:', {tx: string}, 'NodeApi');
-                Core.app().bus().emit(NodeApiEvents.setCandidateOffSuccess, {tx: string});
+            txHash.then((txString: string) => {
+                Core.info('Send setCandidateOff. Transaction:', {tx: txString}, 'NodeApi');
+                Core.app().bus().emit(NodeApiEvents.setCandidateOffSuccess, {tx: txString});
                 resolve(true);
             })
                 .catch((error) => {
@@ -118,7 +118,7 @@ export class NodeApi {
                 }
                 resolve(response.data.result);
             }).catch((err) => {
-                if (err.response.data.error.code == 404) {
+                if (err.response.data.error.code === 404) {
                     Core.error('Can not get candidate from node', [err.errno ], 'NodeApi');
                     resolve(false);
                 } else {
