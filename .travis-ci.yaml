@@ -1,0 +1,32 @@
+language: node_js
+node_js:
+  - "node"
+
+env:
+  - DOCKER_COMPOSE_VERSION=1.4.2
+
+before_install:
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
+
+install:
+  - travis_retry cp .env.dist .env
+  - export CI_COMMIT_REF_SLUG="$TRAVIS_BRANCH"
+  - docker build .docker/app/ -t docker.local/rundax/minter/node_monitoring/app:$(CI_COMMIT_REF_SLUG)
+  - docker-compose pull
+
+script:
+  - docker-compose run app yarn
+  - docker-compose run app lint
+  - docker-compose run app build
+
+deploy:
+  provider: releases
+  api_key: $GITHUB_OAUTH_TOKEN
+  file_glob: true
+  file: app/dist/*
+  skip_cleanup: true
+  on:
+    tags: true
