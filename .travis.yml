@@ -21,8 +21,8 @@ install:
 
 script:
   - docker-compose -f docker-compose-ci.yml run app yarn
-  - docker-compose -f docker-compose-ci.yml run app lint
-  - docker-compose -f docker-compose-ci.yml run app build
+  - docker-compose -f docker-compose-ci.yml run app yarn lint
+  - docker-compose -f docker-compose-ci.yml run app yarn build
 
 
 deploy:
