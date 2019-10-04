@@ -20,7 +20,7 @@ export default class ConfigController {
         let a = Promise.all([this.daemon.getNodeConfig(), this.daemon.getNodeId()]).then(value => {
             console.log(value);
         });
-        //let res = await this.daemon.getNodeConfig();
+        // let res = await this.daemon.getNodeConfig();
         ctx.body = {};
     }
 }

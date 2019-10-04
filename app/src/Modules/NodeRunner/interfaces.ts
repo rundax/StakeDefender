@@ -118,8 +118,8 @@ export interface NodeConfigInterface {
 
 
 export interface NodeAddressBookInterface {
-    key: string,
-    addrs: AddressBookItemInterface[]
+    key: string;
+    addrs: AddressBookItemInterface[];
 }
 
 
@@ -128,15 +128,15 @@ interface AddressBookItemInterface {
         id: string,
         ip: string,
         port: number
-    },
+    };
     src: {
         id: string,
         ip: string,
         port: number
-    },
-    attempts: number,
-    last_attempt: Date,
-    last_success: Date,
-    bucket_type: number,
-    buckets: any // todo
+    };
+    attempts: number;
+    last_attempt: Date;
+    last_success: Date;
+    bucket_type: number;
+    buckets: any; // todo
 }
