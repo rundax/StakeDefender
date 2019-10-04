@@ -1,4 +1,5 @@
 dist: trusty
+sudo: true
 env:
   - DOCKER_COMPOSE_VERSION=1.24.1
 
@@ -9,6 +10,7 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
 
 install:
+  - docker -D info
   - travis_retry cp .env.dist .env
   - export CI_COMMIT_REF_SLUG="$TRAVIS_BRANCH"
   - docker build .docker/app/ -t docker.local/rundax/minter/node_monitoring/app:$CI_COMMIT_REF_SLUG
