@@ -11,7 +11,7 @@ before_install:
 install:
   - travis_retry cp .env.dist .env
   - export CI_COMMIT_REF_SLUG="$TRAVIS_BRANCH"
-  - docker build .docker/app/ -t docker.local/rundax/minter/node_monitoring/app:$(CI_COMMIT_REF_SLUG)
+  - docker build .docker/app/ -t docker.local/rundax/minter/node_monitoring/app:$CI_COMMIT_REF_SLUG
   - docker-compose pull
 
 script:
