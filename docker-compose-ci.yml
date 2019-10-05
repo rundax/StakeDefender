@@ -30,8 +30,8 @@ services:
     volumes:
       - ./.docker/redis/config/redis.conf:/usr/local/etc/redis/redis.conf:ro
       - redis_data:/data/:rw
-    ports:
-      - ${REDIS_PORT}:6379
+#    ports:
+#      - ${REDIS_PORT}:6379
 
 
 
