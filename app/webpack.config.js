@@ -40,6 +40,11 @@ module.exports = {
                 test: /\.node$/,
                 loader: 'node-loader'
             },
+            {
+                test: /\.mjs$/,
+                include: /node_modules/,
+                type: 'javascript/auto'
+            }
         ]
     },
     target: 'node',
