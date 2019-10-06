@@ -1,4 +1,9 @@
 'use strict';
+import {config, DotenvParseOutput} from 'dotenv';
+import * as fs from 'fs';
+import {Core} from '@Core/App';
+import {spawn} from 'child_process';
+
 
 export function inArray(arr:string[] | number[] = [], val:string|number): boolean {
     let len = arr.length;
@@ -45,4 +50,23 @@ export function envBoolean(key: string, defaultValue: boolean): boolean {
         default:
             return false;
     }
+}
+
+
+export function loadEnvFile(path: string): boolean | DotenvParseOutput {
+    try {
+        fs.accessSync(path, fs.constants.R_OK);
+        console.log('Load env vars from file: ' + path);
+        const dotEnv = config({ path: path });
+
+        if (dotEnv.error !== undefined) {
+            console.log('Can not parse .env file in ');
+            console.log(dotEnv.error);
+            return false;
+        }
+        return dotEnv.parsed;
+    } catch (err) {
+        return true;
+    }
+
 }

@@ -1,10 +1,11 @@
-import {core} from '@Config/app-config';
 import {Logger} from '@elementary-lab/logger/src';
 import {LoggerInterface} from '@elementary-lab/standards/src/LoggerInterface';
 import {CacheInterface} from '@elementary-lab/standards/src/CacheInterface';
 import {RedisCache} from '@elementary-lab/cache/src/Drivers/RedisCache';
 import {EventBusInterface} from '@elementary-lab/standards/src/EventBusInterface';
 import {SimpleEventBus} from '@elementary-lab/events/src/SimpleEventBus';
+import {LoggerConfigInterface} from '@elementary-lab/logger/src/Interface/LoggerConfigInterface';
+import {ClientOpts} from 'redis';
 
 export class Core {
 
@@ -24,10 +25,12 @@ export class Core {
         [key:string]: any
     } = {};
 
-    public static bootstrap(info: AppInfo):void {
-        Core.$self = new Core();
+    public static bootstrap(info: AppInfo, coreConfig: CoreConfigInterface):void {
+        Core.$self = new Core(coreConfig);
         Core.appInfo = info;
+        Core.debug('Hello ' + info.id, {version: info.version, env: info.environment});
         Core.info('Bootstrap system');
+
     }
 
     public static getAppInfo(): AppInfo {
@@ -36,9 +39,9 @@ export class Core {
     /**
      *
      */
-    private constructor() {
-        this.objects.cache = new RedisCache(core.redis);
-        this.objects.logger = new Logger(core.log);
+    private constructor(coreConfig: CoreConfigInterface) {
+        this.objects.cache = new RedisCache(coreConfig.redis);
+        this.objects.logger = new Logger(coreConfig.log);
         this.objects.bus = new SimpleEventBus(this.objects.logger);
     }
 
@@ -120,4 +123,9 @@ export interface AppInfo {
     id: string;
     version: string;
     environment: string;
+}
+
+export interface CoreConfigInterface {
+    log: LoggerConfigInterface;
+    redis: ClientOpts;
 }
