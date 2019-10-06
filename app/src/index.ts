@@ -3,15 +3,24 @@
 import {NodeApi} from './Modules/NodeApi';
 import {Daemon} from './Modules/NodeRunner/deamon';
 import {Core} from '@Core/App';
-import {base, services} from '@Config/app-config';
 import {ApiServer} from './Modules/Api';
 import {Monitoring} from './Modules/Monitoring';
 import {Pmx} from './Modules/Pmx';
 import {Notify} from './Modules/Notify';
+import {loadEnvFile} from './Helpers/functions';
+import {ConfigFactory} from '@Config/app-config';
 
-Core.bootstrap(base);
 
-Core.debug('Hello ' + base.id, {version: base.version, env: base.environment});
+const env = loadEnvFile(process.cwd() + '/.env');
+if (env === false) {
+    process.exit(1);
+}
+
+const base = ConfigFactory.getBase();
+const core = ConfigFactory.getCore();
+const services = ConfigFactory.getServices();
+
+Core.bootstrap(base, core);
 
 Core.app().setExitHandler((data: {code:string}) => {
     Core.info('Pcntl signal received. Closing connection server.', [data.code]);

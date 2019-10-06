@@ -5,7 +5,6 @@ import {SimpleEventBus} from '@elementary-lab/events/src/SimpleEventBus';
 import {BaseModule} from '@Core/BaseModule';
 import {BlockSkippedData, SplashCheckerEvents} from '../../../Monitoring/Modules/SplashChecker/Events';
 import Telegraf, {ContextMessageUpdate} from 'telegraf';
-import * as pug from 'pug';
 
 export class NotifyToTelegram extends BaseModule<NotifyToTelegram> {
 
