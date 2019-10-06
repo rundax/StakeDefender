@@ -15,7 +15,7 @@ before_install:
 
 install:
   - travis_retry cp .env.dist .env
-  - export CI_COMMIT_REF_SLUG=$TRAVIS_BRANCH | tr "[:upper:]" "[:lower:]" | sed "s/[^a-zA-Z0-9-]/-/g" | sed "s/-$//g" | tr -d '\n' | tr -d '\r'
+  - export CI_COMMIT_REF_SLUG=`echo $TRAVIS_BRANCH | tr "[:upper:]" "[:lower:]" | sed "s/[^a-zA-Z0-9-]/-/g" | sed "s/-$//g" | tr -d '\n' | tr -d '\r'`
   - docker build .docker/app/ -t docker.local/rundax/minter/node_monitoring/app:$CI_COMMIT_REF_SLUG
   - docker-compose build --pull
 
