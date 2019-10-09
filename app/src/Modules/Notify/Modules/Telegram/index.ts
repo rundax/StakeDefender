@@ -31,7 +31,6 @@ export class NotifyToTelegram extends BaseModule<NotifyToTelegram> {
             this.botInstance.telegram.sendMessage(
                 this.config.chatId,
                 this.generateMessage(
-                    Core.getAppInfo().id,
                     'BLOCK SKIPPED',
                     'Warning',
                     'Validator skip block #' + block.blockNumber + '(' + block.blockHash + ')'
@@ -44,9 +43,11 @@ export class NotifyToTelegram extends BaseModule<NotifyToTelegram> {
     /**
      * TODO refactor to pug
      */
-    private generateMessage(hostName: string, eventName:string, level: string, description): string {
+    private generateMessage(eventName:string, level: string, description): string {
         let text = '';
-        text = text + 'Instance id: ' + hostName + '\n\r';
+        text = text + 'Instance id: ' + Core.getAppInfo().id + '\n\r';
+        text = text + 'Environment: ' + Core.getAppInfo().environment + '\n\r';
+        text = text + 'App version: ' + Core.getAppInfo().version + '\n\r';
         text = text + 'Event: ' + eventName + '\n\r';
         text = text + 'Level: ' + level + '\n\r';
         text = text + 'Description: ' + description + '\n\r';
