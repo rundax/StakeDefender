@@ -1,2 +1,2 @@
 # TODO 
-## translate from russian
+## Coming soon.
