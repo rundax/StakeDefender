@@ -1,5 +1,6 @@
 const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const StringReplacePlugin = require("string-replace-webpack-plugin");
 const TSConfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const context = path.resolve(__dirname, 'src');
 
@@ -22,7 +23,7 @@ module.exports = {
                 configFile: "./tsconfig.json",
                 logLevel: "debug",
                 extensions: [".ts", ".tsx"]
-            })
+            }),
         ]
     },
     externals: ['node_modules'],
@@ -44,14 +45,27 @@ module.exports = {
                 test: /\.mjs$/,
                 include: /node_modules/,
                 type: 'javascript/auto'
+            },
+            {
+                test: /\.ts$/,
+                loader: StringReplacePlugin.replace({
+                    replacements: [
+                        {
+                            pattern: /env\(\'APP_VERSION\'\)/ig,
+                            replacement: function (match, p1, offset, string) {
+                                return '\'' + (process.env.CI_COMMIT_REF_SLUG ? process.env.CI_COMMIT_REF_SLUG : 'dev-master-dirty') +'\'';
+                            }
+                        }
+                    ]})
             }
         ]
     },
     target: 'node',
     devtool: "source-map",
-//    plugins: [
-//        new CleanWebpackPlugin(path.resolve(__dirname, 'dist')),
-//    ],
+   plugins: [
+       //new CleanWebpackPlugin(path.resolve(__dirname, 'dist')),
+       new StringReplacePlugin()
+   ],
     stats: {
         colors: true,
         warnings: false
