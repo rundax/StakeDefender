@@ -5,6 +5,7 @@ import {SimpleEventBus} from '@elementary-lab/events/src/SimpleEventBus';
 import {BaseModule} from '@Core/BaseModule';
 import {BlockSkippedData, SplashCheckerEvents} from '../../../Monitoring/Modules/SplashChecker/Events';
 import Telegraf, {ContextMessageUpdate} from 'telegraf';
+import {NodeApiEvents} from '../../../NodeApi';
 
 export class NotifyToTelegram extends BaseModule<NotifyToTelegram> {
 
@@ -37,6 +38,37 @@ export class NotifyToTelegram extends BaseModule<NotifyToTelegram> {
                 )
             );
         });
+        this.bus.on(SplashCheckerEvents.SPLASH_CHECKPOINT_2, () => {
+            this.botInstance.telegram.sendMessage(
+                this.config.chatId,
+                this.generateMessage(
+                    'Shutdown validator',
+                    'Warning',
+                    'To many missed block. Send setCandidateOff'
+                )
+            );
+        });
+        this.bus.on(NodeApiEvents.setCandidateOffSuccess, (data) => {
+            this.botInstance.telegram.sendMessage(
+                this.config.chatId,
+                this.generateMessage(
+                    'Shutdown validator',
+                    'Info',
+                    'Transaction setCandidateOff was Success send: ' + JSON.stringify(data)
+                )
+            );
+        });
+        this.bus.on(NodeApiEvents.setCandidateOffError, (data) => {
+            this.botInstance.telegram.sendMessage(
+                this.config.chatId,
+                this.generateMessage(
+                    'Shutdown validator',
+                    'Error',
+                    'Error send setCandidateOff: ' + JSON.stringify(data)
+                )
+            );
+        });
+
         return Promise.resolve(true);
     }
 
