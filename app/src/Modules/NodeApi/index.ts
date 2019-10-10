@@ -57,26 +57,27 @@ export class NodeApi {
 
     public setCandidateOff(): Promise<boolean> {
         return new Promise<boolean>((resolve, reject) => {
-            let txParams = new SetCandidateOffTxParams({
-                privateKey: this.config.privateKey,
-                publicKey: this.config.publicKeyValidator,
-                chainId: this.blockchainConfig.chainId,
-                feeCoinSymbol: this.blockchainConfig.feeCoinSymbol,
-                message: 'Auto Off',
-            });
-            let txHash:Promise<string> = this.minterSDK.postTx(txParams);
-            txHash.then((txString: string) => {
-                Core.info('Send setCandidateOff. Transaction:', {tx: txString}, 'NodeApi');
-                Core.app().bus().emit(NodeApiEvents.setCandidateOffSuccess, {tx: txString});
-                resolve(true);
-            })
-                .catch((error) => {
-                    Core.error('Error to send tx', [error.response.data], 'NodeApi');
-                    Core.app().bus().emit(NodeApiEvents.setCandidateOffError, {error: error.response.data});
-                    reject(false);
+            this.getMinGasPrice().then((gasPrice: number) => {
+                let txParams = new SetCandidateOffTxParams({
+                    privateKey: this.config.privateKey,
+                    publicKey: this.config.publicKeyValidator,
+                    chainId: this.blockchainConfig.chainId,
+                    feeCoinSymbol: this.blockchainConfig.feeCoinSymbol,
+                    gasPrice: gasPrice,
+                    message: 'Auto Off',
                 });
-
-
+                let txHash:Promise<string> = this.minterSDK.postTx(txParams);
+                txHash.then((txString: string) => {
+                    Core.info('Send setCandidateOff. Transaction:', {tx: txString}, 'NodeApi');
+                    Core.app().bus().emit(NodeApiEvents.setCandidateOffSuccess, {tx: txString});
+                    resolve(true);
+                })
+                    .catch((error) => {
+                        Core.error('Error to send tx', [error.response.data], 'NodeApi');
+                        Core.app().bus().emit(NodeApiEvents.setCandidateOffError, {error: error.response.data});
+                        reject(false);
+                    });
+            });
         });
 
     }
@@ -108,6 +109,21 @@ export class NodeApi {
                 reject(err);
             });
         });
+    }
+
+    public async getMinGasPrice(): Promise<number> {
+        return new Promise<any>((resolve, reject) => {
+            this.request('/min_gas_price').then((response) => {
+                if (response === false) {
+                    reject('Response is false');
+                }
+                resolve(parseInt(response.data.result));
+            }).catch((err) => {
+                Core.error('Can not get status from node', err);
+                reject(err);
+            });
+        });
+
     }
 
     public async getCandidate(validatorPublicKey: string): Promise<CandidateInterface | boolean> {

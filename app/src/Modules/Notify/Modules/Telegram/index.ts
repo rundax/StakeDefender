@@ -34,7 +34,7 @@ export class NotifyToTelegram extends BaseModule<NotifyToTelegram> {
                 this.generateMessage(
                     'BLOCK SKIPPED',
                     'Warning',
-                    'Validator skip block #' + block.blockNumber + '(' + block.blockHash + ')'
+                    'Validator skip block #' + block.blockHeight + '(' + block.blockHash + ')'
                 )
             );
         });
