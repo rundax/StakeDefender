@@ -5,6 +5,11 @@ export class SplashCheckerEvents {
 }
 
 export interface BlockSkippedData {
-    blockNumber: number;
+    blockHeight: number;
+    blockHash: string;
+}
+
+export interface SplashCheckpoint {
+    blockHeight: number;
     blockHash: string;
 }

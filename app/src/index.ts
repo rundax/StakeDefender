@@ -1,7 +1,7 @@
 'use strict';
 
 import {NodeApi} from './Modules/NodeApi';
-import {Daemon} from './Modules/NodeRunner/deamon';
+import {Daemon} from './Modules/NodeRunner/Deamon';
 import {Core} from '@Core/App';
 import {ApiServer} from './Modules/Api';
 import {Monitoring} from './Modules/Monitoring';

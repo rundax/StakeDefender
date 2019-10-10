@@ -39,7 +39,7 @@ export class Pmx {
         });
         this.pxmInstance.action('monitoring:splashChecker:blockSkipped', (reply) => {
             const info: BlockSkippedData = {
-                blockNumber: 123,
+                blockHeight: 123,
                 blockHash: 'testHash',
             };
             this.bus.emit(SplashCheckerEvents.BLOCK_SKIPPED, info);

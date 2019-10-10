@@ -4,7 +4,7 @@ import {Context} from 'koa';
 import * as bodyParser from 'koa-bodyparser';
 import {Core} from '@Core/App';
 import ConfigController from './Controllers/ConfigController';
-import {Daemon} from '../NodeRunner/deamon';
+import {Daemon} from '../NodeRunner/Deamon';
 
 export class ApiServer {
 

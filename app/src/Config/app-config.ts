@@ -33,7 +33,7 @@ export class ConfigFactory {
                     }),
                     new SentryTarget({
                         enabled: envBoolean('APP_SENTRY_ENABLED', false),
-                        dsn: env('APP_SENTRY_DSN'),
+                        dsn: env('APP_SENTRY_DSN', 'https://fake@fake.local/123'),
                         release: ConfigFactory.getBase().version,
                         environment: ConfigFactory.getBase().environment,
                         levels: [LogLevel.ERROR, LogLevel.WARNING]
@@ -65,7 +65,7 @@ export class ConfigFactory {
                 }
             },
             nodeRunner: {
-                runNode: envBoolean('APP_BLOCKCHAIN_RUN_NODE', true),
+                runNode: envBoolean('APP_BLOCKCHAIN_RUN_NODE', false),
                 version: env('APP_BLOCKCHAIN_VERSION', 'current'),
                 home: env('APP_BLOCKCHAIN_HOME', path.resolve(process.cwd(), './blockchain') + '/'),
                 binDir: env('APP_BLOCKCHAIN_BIN_DIR', path.resolve(process.cwd(), './bin') + '/'),
