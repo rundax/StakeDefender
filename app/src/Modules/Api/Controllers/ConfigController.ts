@@ -1,6 +1,6 @@
 import * as Router from 'koa-router';
 import {Context} from 'koa';
-import {Daemon} from '../../NodeRunner/deamon';
+import {Daemon} from '../../NodeRunner/Deamon';
 
 export default class ConfigController {
 

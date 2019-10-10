@@ -3,6 +3,7 @@ import {MonitoringConfigInterface} from './Interfaces/MonitoringConfigInterface'
 import {BlockNotify} from './Modules/BlockNotify';
 import {SplashChecker} from './Modules/SplashChecker';
 import {Core} from '@Core/App';
+import {SplashCheckerEvents, SplashCheckpoint} from './Modules/SplashChecker/Events';
 
 
 
@@ -37,14 +38,14 @@ export class Monitoring {
     }
 
     private setListeners(): void {
-        Core.app().bus().on('monitoring.splashChecker.checkpoint2', () => {
+        Core.app().bus().on(SplashCheckerEvents.SPLASH_CHECKPOINT_2, (data: SplashCheckpoint) => {
             Core.info('I can see checkpoint2. Send setCandidateOff', [], 'Monitoring');
             this.nodeApi.setCandidateOff()
                 .then((data) => {
-                    Core.info('Send tx setCandidateOff is success');
+                    Core.info('Send tx setCandidateOff is success', [], 'Monitoring');
                 })
                 .catch((error) => {
-                    Core.error('Send tx setCandidateOff is not success', error, 'Monitoring');
+                    Core.error('Send tx setCandidateOff is not success', error.toString(), 'Monitoring');
                 });
         });
     }

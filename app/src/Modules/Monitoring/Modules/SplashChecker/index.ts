@@ -4,7 +4,7 @@ import {BaseMonitoringModuleConfigInterface} from '../../Interfaces/MonitoringCo
 import {BlockInfoInterface, ValidatorItemInterface} from '../../../NodeApi/Interfaces/InfoInterface';
 import {EventBusInterface} from '@elementary-lab/standards/src/EventBusInterface';
 import {SimpleEventBus} from '@elementary-lab/events/src/SimpleEventBus';
-import {BlockSkippedData, SplashCheckerEvents} from './Events';
+import {BlockSkippedData, SplashCheckerEvents, SplashCheckpoint} from './Events';
 
 /**
  *
@@ -47,10 +47,8 @@ export class SplashChecker {
                             });
                             if (isSign === undefined) {
                                 BlockStorage.addBlock(parseInt(block.height), block.hash, true);
-                                const info: BlockSkippedData = {
-                                    blockHash: block.hash,
-                                    blockNumber: parseInt(block.height)
-                                };
+
+                                const info: BlockSkippedData = {blockHash: block.hash, blockHeight: parseInt(block.height)};
                                 this.bus.emit(SplashCheckerEvents.BLOCK_SKIPPED, info);
                             } else {
                                 BlockStorage.addBlock(parseInt(block.height), block.hash, false);
@@ -59,7 +57,9 @@ export class SplashChecker {
                             if (missingBlock > this.config.skippedBlockLimit && !this.sendCheckpoint2) {
                                 this.sendCheckpoint2 = true;
                                 Core.warn('Activate checkpoint 2', [], 'SplashChecker');
-                                this.bus.emit(SplashCheckerEvents.SPLASH_CHECKPOINT_2);
+
+                                const data: SplashCheckpoint  = {blockHash: block.hash, blockHeight: parseInt(block.height)};
+                                this.bus.emit(SplashCheckerEvents.SPLASH_CHECKPOINT_2, data);
                             } else {
                                 Core.info('Limit is normal', [missingBlock], 'SplashChecker');
                             }
