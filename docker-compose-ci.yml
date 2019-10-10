@@ -18,6 +18,8 @@ services:
 
     env_file:
       - .env
+    environment:
+      CI_COMMIT_REF_SLUG: ${CI_COMMIT_REF_SLUG}
 #    ports:
 #      - ${NODE_API_PORT:-8841}:8841
 #      - ${NODE_GUI_PORT:-3000}:3000
