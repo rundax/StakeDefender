@@ -2,7 +2,7 @@
 <p>
 Keep your stake in safety.
 
-Stake Defender is a tool to turn off your validator when it is missed blocks.
+Stake Defender is a tool to turn off your validator when it starts to miss blocks.
 We recommend running several instances in different machines with different Minter Node API.
 
 [![Build Status][build-status]][build-status-url]
