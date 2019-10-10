@@ -33,7 +33,7 @@ export class ConfigFactory {
                     }),
                     new SentryTarget({
                         enabled: envBoolean('APP_SENTRY_ENABLED', false),
-                        dsn: env('APP_SENTRY_DSN'),
+                        dsn: env('APP_SENTRY_DSN', 'https://fake@fake.local/123'),
                         release: ConfigFactory.getBase().version,
                         environment: ConfigFactory.getBase().environment,
                         levels: [LogLevel.ERROR, LogLevel.WARNING]
