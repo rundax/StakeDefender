@@ -1,4 +1,12 @@
-# Сборка проекта
+# Сборка из исходников
+
+## Установка программного обезпечения
+
+ * [Docker](https://docs.docker.com/install/linux/docker-ce/ubuntu/)
+ * [docker-compose](https://docs.docker.com/compose/install/)
+ * Make
+ 
+
 ## Запуск кода без компиляции
 Для запуска кода без сборки его в js bundle в консоли нужно выполнить команду `node -r ts-node/register -r tsconfig-paths/register src/index.ts`
 
