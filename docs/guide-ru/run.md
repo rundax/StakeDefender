@@ -5,13 +5,14 @@
  * leveldb - v1.20 ([инструкция](https://gist.github.com/danil-lashin/9df600cb2d1fe8e503aae60fc0d6e209))
  
 Подготовка и запуск:
- * Скачиваем линукс-версию бинарника ноды [тут](https://github.com/MinterTeam/minter-go-node/releases)
- * Разпаковываем в удобное место(к примеру, /home/minter/bin)
+ * Скачиваем линукс-версию бинарника [Minter ноды](https://github.com/MinterTeam/minter-go-node/releases)
+ * Разпаковываем в удобное место (к примеру, /home/minter/bin)
  * Меняем имя бинарника в формат minter_{версия блокчейна}_linux_amd64 (к примеру minter_1.0.4_linux_amd64)
- * Скачиваем последний релиз [тут](https://github.com/rundax/StakeDefender/releases)
- * Создаем рядом с app.js файл с переменными окружения `.env`
- * Заполняем переменные значениями. [Тут](env-vars.md) есть описание всех переменных в проекте, а [тут](https://github.com/rundax/StakeDefender/blob/master/.env.dist) есть файл пример
- * Запускаем приложение командой node app.js
+ * Скачиваем последний релиз [Minter Stake Defender](https://github.com/rundax/StakeDefender/releases)
+ * Создаем рядом с app.js файл `.env` и заполняем переменные окружения
+ * [Пример](https://github.com/rundax/StakeDefender/blob/master/.env.dist) заполненого `.env` 
+ * [Посмотреть описание](env-vars.md) всех переменных в проекте
+ * Запускаем приложение командой `node app.js`
  * Если все успешно, в логах должны быть примерно следующие строки:
  ```text
  Load env vars from file: /app/StakeDefender/.env
@@ -21,4 +22,4 @@
 
 ## Docker
  
-### TODO 
+*  TODO 
