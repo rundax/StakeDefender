@@ -3,6 +3,7 @@
 Keep your stake in safety.
 
 Stake Defender is a tool to turn off your validator when it starts to miss blocks.
+Stake Defender includes components to monitor Minter node stability and notification services to keep node in a stable state.
 We recommend running several instances in different machines with different Minter Node API.
 
 [![Build Status][build-status]][build-status-url]
@@ -12,7 +13,7 @@ We recommend running several instances in different machines with different Mint
  * [English](docs/guide-en/index.md)
  
  **Stake Defender built by Rundax Team**
- https://minter.rundax.com/
+ https://rundax.com/
  
  You can support us by sending any Minter's coins to our address:
 
