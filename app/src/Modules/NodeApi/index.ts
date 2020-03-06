@@ -146,9 +146,9 @@ export class NodeApi {
 
     public async getValidators(height?:number): Promise<ValidatorItemInterface[]> {
         return new Promise<ValidatorItemInterface[]>((resolve, reject) => {
-            let url = '/validators';
+            let url = '/validators?perPage=256';
             if (height !== null) {
-                url = url + '?height=' + height;
+                url = url + '&height=' + height;
             }
             this.request(url)
                 .then((response) => {
