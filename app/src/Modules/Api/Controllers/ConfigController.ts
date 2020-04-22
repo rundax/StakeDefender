@@ -17,7 +17,7 @@ export default class ConfigController {
     }
 
     public async index(ctx: Context) {
-        let a = Promise.all([this.daemon.getNodeConfig(), this.daemon.getNodeId()]).then(value => {
+        let a = Promise.all([this.daemon.getNodeConfig()]).then(value => {
             console.log(value);
         });
         // let res = await this.daemon.getNodeConfig();

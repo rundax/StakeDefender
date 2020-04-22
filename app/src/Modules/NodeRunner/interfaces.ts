@@ -10,7 +10,7 @@ export interface NodeProcessConfig {
 
 export interface NodeLogFormat {
     _msg: string;
-    level: 'info' | 'error'| 'debug';
+    level: 'info' | 'error' | 'debug';
     module: ModuleName;
     impl?: string;
     connection?: string;
@@ -23,27 +23,28 @@ export interface NodeLogFormat {
      * block height
      */
     height?: number;
-    nodeInfo?: {
-        id: string,
-        listen_addr: string,
-        network: string,
-        version: string,
-        channels: string,
-        moniker: string,
-        protocol_version: {
-            p2p: number,
-            block: number,
-            app: number
-        }
-        other: object
-
-    };
+    nodeInfo?: NodeInfo;
     addr?: string;
     peer?: string;
     pubKey?: string;
     conn?: string;
     listen_addr?: string;
 
+}
+
+interface NodeInfo {
+    id: string;
+    listen_addr: string;
+    network: string;
+    version: string;
+    channels: string;
+    moniker: string;
+    protocol_version: {
+        p2p: number;
+        block: number;
+        app: number;
+    };
+    other: object;
 }
 
 export enum ModuleName {
@@ -66,7 +67,7 @@ export interface NodeConfigInterface {
     api_listen_addr: string;
     keep_state_history: boolean;
     api_simultaneous_requests: number;
-    fast_sync:boolean;
+    fast_sync: boolean;
     db_backend: string;
     db_path: string;
     log_level: string;
@@ -139,4 +140,68 @@ interface AddressBookItemInterface {
     last_success: Date;
     bucket_type: number;
     buckets: any; // todo
+}
+
+export interface CliStatus {
+    version: string;
+    latest_block_hash: string;
+    latest_app_hash: string;
+    latest_block_height: string;
+    latest_block_time: string;
+    keep_last_states: string;
+    tm_status: {
+        node_info: NodeInfo
+        sync_info: {
+            latest_block_hash: string;
+            latest_app_hash: string;
+            latest_block_height: number;
+            latest_block_time: string;
+        }
+        validator_info: {
+            address: string,
+            pub_key: {
+                value: string
+            }
+        }
+    };
+}
+
+
+export interface CliNetInfo {
+    listening: boolean;
+    listeners: string;
+    n_peers: number;
+    peers: PeerInfo[];
+}
+
+interface PeerInfo {
+    node_info: NodeInfo;
+    is_outbound: boolean;
+    remote_ip: string;
+    connection_status: {
+        Duration: number
+        SendMonitor: MonitorData
+        RecvMonitor: MonitorData
+        Channels: ChannelInfo[]
+    };
+}
+
+interface ChannelInfo {
+    ID: number;
+    SendQueueCapacity: number;
+    SendQueueSize: number;
+    Priority: number;
+    RecentlySent: number;
+}
+
+interface MonitorData {
+    Active: boolean;
+    Start: string;
+    Duration: number;
+    Idle: number;
+    Bytes: number;
+    Samples: number;
+    CurRate: number;
+    AvgRate: number;
+    PeakRate: number;
 }

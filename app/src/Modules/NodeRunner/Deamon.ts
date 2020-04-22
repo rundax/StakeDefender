@@ -8,31 +8,32 @@ import * as toml from 'toml';
 import {NodeRunnerEvents} from './Events';
 import {EventBusInterface} from '@elementary-lab/standards/src/EventBusInterface';
 import {SimpleEventBus} from '@elementary-lab/events/src/SimpleEventBus';
+import {LoggerInterface} from '@elementary-lab/standards/src/LoggerInterface';
 
 export class Daemon {
 
-    public static readonly  STOP_SIGNAL = 'SIGINT';
+    public static readonly STOP_SIGNAL = 'SIGINT';
 
     private blockHeight: number;
 
     private daemon?: ChildProcess = null;
 
-    private options:  NodeProcessConfig;
+    private options: NodeProcessConfig;
 
     private inRestartProcess: boolean = false;
 
     private bus: EventBusInterface<SimpleEventBus>;
 
+    private log: LoggerInterface;
+
     public constructor(options: NodeProcessConfig) {
         this.options = options;
         this.bus = Core.app().bus();
+        this.log = Core.app().logger();
     }
 
-    /**
-     *
-     */
-    public start(): Promise<Daemon| false> {
-        return new Promise<Daemon| false >((resolve, reject) => {
+    public start(): Promise<Daemon | false> {
+        return new Promise<Daemon | false>((resolve, reject) => {
             if (!this.options.runNode) {
                 return resolve(false);
             }
@@ -40,7 +41,7 @@ export class Daemon {
                 Core.info('Starting blockchain daemon', [this.options.version], 'Daemon');
                 fs.access(this.getNodeRunScript(), fs.constants.X_OK | fs.constants.R_OK, (err: any) => {
                     if (err) {
-                        Core.emergency(
+                        this.log.emergency(
                             'Error access to executable file. He is not exist or not executable',
                             [this.getNodeRunScript()],
                             'Daemon'
@@ -49,11 +50,11 @@ export class Daemon {
                     }
                     this.daemon = spawn(this.getNodeRunScript(),
                         [
-                            'node',
-                            '--home-dir=' + this.options.home
+                            '--home-dir=' + this.options.home,
+                            'node'
                         ],
                     );
-                    Core.info('Config: ', [this.getNodeRunScript() + ' node --home-dir=' + this.options.home], 'Daemon');
+                    this.log.info('Config: ', [this.getNodeRunScript() + ' node --home-dir=' + this.options.home], 'Daemon');
                     this.subscribeOnDaemonEvents();
                     this.configurePipes();
                     return resolve(this);
@@ -63,26 +64,9 @@ export class Daemon {
 
     }
 
-    public getNodeId(): Promise<string> {
-        return new Promise<string>((resolve, reject) => {
-            const result  = spawn(this.getNodeRunScript(),
-                [
-                    'show_node_id',
-                    '--home-dir=' + this.options.home
-                ],
-            );
-            result.on('data', (data) => {
-                let a = Buffer.from(data, 'utf-8').toString();
-                resolve(a);
-            });
-
-        });
-    }
-
-    private getNodeRunScript(): string {
+    public getNodeRunScript(): string {
         return this.options.binDir + 'minter_' + this.options.version + '_linux_amd64';
     }
-
 
     public configurePipes(): this {
         this.daemon.stdout.on('data', (content) => {
@@ -92,8 +76,7 @@ export class Daemon {
                     try {
                         this.parseLog(JSON.parse(item));
                     } catch (e) {
-                        Core.error('Error to parse log:', [e, item]);
-                        // throw e;
+                        this.log.error('Error to parse log:', [e, item]);
                     }
 
                 }
@@ -103,19 +86,15 @@ export class Daemon {
         return this;
     }
 
-    /**
-     *
-     * @param data
-     */
     public parseLog(data: NodeLogFormat): void {
 
         let component = 'minter:' + data.module;
-        let additional = { ... data };
+        let additional = {...data};
         delete additional._msg;
         delete additional.level;
         delete additional.module;
         if (data.height !== undefined) {
-            if (this.blockHeight !==  data.height ) {
+            if (this.blockHeight !== data.height) {
                 this.blockHeight = data.height;
                 if (this.options.blockNotify) {
                     this.bus.emit(NodeRunnerEvents.NEW_BLOCK, data.height);
@@ -128,13 +107,13 @@ export class Daemon {
         }
         switch (data.level) {
             case 'info':
-                Core.info('[block:' + this.blockHeight + '] ' + data._msg, additional, component);
+                this.log.info('[block:' + this.blockHeight + '] ' + data._msg, additional, component);
                 break;
             case 'error':
-                Core.error('[block:' + this.blockHeight + '] ' + data._msg, additional, component);
+                this.log.error('[block:' + this.blockHeight + '] ' + data._msg, additional, component);
                 break;
             case 'debug':
-                Core.debug('[block:' + this.blockHeight + '] ' + data._msg, additional, component);
+                this.log.debug('[block:' + this.blockHeight + '] ' + data._msg, additional, component);
                 break;
 
         }
@@ -146,15 +125,15 @@ export class Daemon {
     private subscribeOnDaemonEvents(): void {
         this.daemon.stderr.on('data', (data: any) => {
             // TODO: log error
-            Core.error('========Blockchain Error==========', [], 'minter:logs_parser');
-            Core.error(data.toString(), [], 'minter:logs_parser');
-            Core.error('==================================', [], 'minter:logs_parser');
+            this.log.error('========Blockchain Error==========', [], 'minter:logs_parser');
+            this.log.error(data.toString(), [], 'minter:logs_parser');
+            this.log.error('==================================', [], 'minter:logs_parser');
         });
 
         this.daemon.on('close', (code: number) => {
             // TODO: log error
-            Core.emergency('Child process exited with code: ', code);
-            if (this.inRestartProcess !==  true) {
+            this.log.emergency('Child process exited with code: ', code);
+            if (this.inRestartProcess !== true) {
                 process.exit(99);
             }
         });
@@ -164,12 +143,12 @@ export class Daemon {
     public stop(): Promise<void> {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
-                Core.error('Can not stop blockchain node. Timeout. Kill!!!', [], 'Daemon');
+                this.log.error('Can not stop blockchain node. Timeout. Kill!!!', [], 'Daemon');
                 reject();
             }, 10000);
             this.daemon.kill(Daemon.STOP_SIGNAL);
             this.daemon.on('exit', (code: number) => {
-                Core.info('Node exit with code:', code,  'Daemon');
+                this.log.info('Node exit with code:', code, 'Daemon');
                 resolve();
             });
         });
@@ -199,6 +178,5 @@ export class Daemon {
             });
         });
     }
-
 
 }

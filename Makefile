@@ -2,7 +2,23 @@ include .env
 export
 
 build:
-	docker build .docker/app/ -t docker.local/rundax/minter/node_monitoring/app:$(CI_COMMIT_REF_SLUG)
+	docker build .docker/node-base/ \
+		--tag $(DOCKER_SERVER_HOST):$(DOCKER_SERVER_PORT)/$(DOCKER_PROJECT_PATH)/node-base:$(DOCKER_IMAGE_VERSION) \
+		--build-arg DOCKER_SERVER_HOST=$(DOCKER_SERVER_HOST) \
+		--build-arg DOCKER_SERVER_PORT=$(DOCKER_SERVER_PORT) \
+		--build-arg DOCKER_PROJECT_PATH=$(DOCKER_PROJECT_PATH) \
+		--build-arg DOCKER_NODE_VERSION=$(DOCKER_NODE_VERSION) \
+		--build-arg DOCKER_MINTER_VERSION=$(DOCKER_MINTER_VERSION) \
+		--build-arg DOCKER_IMAGE_VERSION=$(DOCKER_IMAGE_VERSION)
+	docker build .docker/node-dev/ \
+		--tag $(DOCKER_SERVER_HOST):$(DOCKER_SERVER_PORT)/$(DOCKER_PROJECT_PATH)/node-dev:$(DOCKER_IMAGE_VERSION) \
+		--build-arg DOCKER_SERVER_HOST=$(DOCKER_SERVER_HOST) \
+		--build-arg DOCKER_SERVER_PORT=$(DOCKER_SERVER_PORT) \
+		--build-arg DOCKER_PROJECT_PATH=$(DOCKER_PROJECT_PATH) \
+		--build-arg DOCKER_NODE_VERSION=$(DOCKER_NODE_VERSION) \
+		--build-arg DOCKER_MINTER_VERSION=$(DOCKER_MINTER_VERSION) \
+		--build-arg DOCKER_IMAGE_VERSION=$(DOCKER_IMAGE_VERSION)
+
 	docker-compose build --pull
 down:
 	docker-compose down

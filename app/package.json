@@ -9,7 +9,8 @@
     "app": "/usr/local/bin/pm2-dev ./dist/app.js",
     "test": "mocha -r ts-node/register test/index.test.ts",
     "lint": "tslint -c tslint.json \"./src/**/*.ts\"",
-    "lint-fix": "tslint --fix -c tslint.json \"./src/**/*.ts\""
+    "lint-fix": "tslint --fix -c tslint.json \"./src/**/*.ts\"",
+    "develop": "ts-node -r ts-node/register -r tsconfig-paths/register src/index.ts"
   },
   "author": "",
   "license": "ISC",
@@ -26,7 +27,10 @@
     "koa-bodyparser": "^4.2.1",
     "koa-requestid": "^2.0.1",
     "koa-router": "^7.4.0",
-    "minter-js-sdk": "^0.19.0",
+    "koa-multer": "^1.0.2",
+    "routing-controllers": "^0.8.1-alpha.2",
+    "minter-js-sdk": "^0.31.0",
+    "minterjs-wallet": "^4.0.4",
     "redis": "^2.8.0",
     "retry-axios": "^1.0.1",
     "telegraf": "^3.32.0",
@@ -62,6 +66,9 @@
     "typescript": "^3.6.3",
     "webpack": "^4.1.0",
     "webpack-cli": "^3.1.2",
-    "string-replace-webpack-plugin": "^0.1.3"
+    "string-replace-webpack-plugin": "^0.1.3",
+    "reflect-metadata": "^0.1.13",
+    "class-transformer": "^0.2.3",
+    "class-validator": "^0.12.1"
   }
 }

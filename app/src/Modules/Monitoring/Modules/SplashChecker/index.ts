@@ -31,6 +31,9 @@ export class SplashChecker {
             Core.warn('Module is not enabled in config file', [], 'SplashChecker');
             return;
         }
+        setTimeout(() => {
+            this.bus.emit('node.newBlock', 110);
+        }, 2000);
         this.bus.on('node.newBlock', (height: number) => {
             setTimeout(() => {
                 Promise.all([this.nodeApi.getValidators(height), this.nodeApi.getBlock(height)])
@@ -59,7 +62,7 @@ export class SplashChecker {
                                 Core.warn('Activate checkpoint 2', [], 'SplashChecker');
 
                                 const data: SplashCheckpoint  = {blockHash: block.hash, blockHeight: parseInt(block.height)};
-                                this.bus.emit(SplashCheckerEvents.SPLASH_CHECKPOINT_2, data);
+                                // this.bus.emit(SplashCheckerEvents.SPLASH_CHECKPOINT_2, data);
                             } else {
                                 Core.info('Limit is normal', [missingBlock], 'SplashChecker');
                             }
