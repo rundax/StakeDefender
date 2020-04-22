@@ -15,6 +15,7 @@ export class ConfigFactory {
     public static getBase(): AppInfo {
         return {
             id: env('APP_NAME', 'app'),
+            validatorName: env('APP_VALIDATOR_NAME', 'undefined'),
             version: env('APP_VERSION'),
             environment: env('APP_ENV'),
         };

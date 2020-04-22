@@ -121,6 +121,7 @@ export class Core {
 
 export interface AppInfo {
     id: string;
+    validatorName: string;
     version: string;
     environment: string;
 }

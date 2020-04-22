@@ -9,6 +9,7 @@
 | APP_NAME            | string | app                         | Уникальный идентификатор инстанса приложения. Исполльзуется в нотификации и для отлавливания ошибок                                    |
 | APP_DEBUG           | bool   | false                       |                                                                                                                                        |
 | APP_ENV             | string |                             | Название окружения, в котором запускается система                                                                                      |
+| APP_VALIDATOR_NAME  | string | undefined                   | Имя валидатора - для отображения в сообщениях                                                                                          |
 | APP_SENTRY_ENABLED  | bool   | false                       | Флаг для включения системы мониторинга ошибок [Sentry](https://sentry.io)                                                              |
 | APP_SENTRY_DSN      | string | https://fake@fake.local/123 | Токен для отправки ошибок в Sentry ([подробности](https://docs.sentry.io/error-reporting/quickstart/?platform=node#configure-the-sdk)) |
 | REDIS_HOST          | string | redis                       | Имя хоста для подключения к redis                                                                                                      |

@@ -77,6 +77,7 @@ export class NotifyToTelegram extends BaseModule<NotifyToTelegram> {
      */
     private generateMessage(eventName:string, level: string, description): string {
         let text = '';
+        text = text + '*' + Core.getAppInfo().validatorName + '*\n\r';
         text = text + 'Instance id: ' + Core.getAppInfo().id + '\n\r';
         text = text + 'Environment: ' + Core.getAppInfo().environment + '\n\r';
         text = text + 'App version: ' + Core.getAppInfo().version + '\n\r';
