@@ -52,12 +52,12 @@ export class ApiServer {
     }
 
     public listen(): Promise<ApiServer> {
-
+        if (!this.config.enabled) {
+            Core.info('Module ApiServer is not enabled');
+            return Promise.resolve(this);
+        }
         return new Promise<ApiServer | any>((resolve, reject) => {
-            if (!this.config.enabled) {
-                Core.info('Module ApiServer is not enabled');
-                resolve(this);
-            }
+
             this.koa.use(async (ctx, next) => {
                 try {
                     await next();
