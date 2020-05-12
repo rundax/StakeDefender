@@ -21,6 +21,7 @@ export class ApiServer {
     }
 
     public init(daemon: Daemon): ApiServer {
+
         this.daemon = daemon;
 
         this.koa = new Koa();
@@ -51,7 +52,12 @@ export class ApiServer {
     }
 
     public listen(): Promise<ApiServer> {
+
         return new Promise<ApiServer | any>((resolve, reject) => {
+            if (!this.config.enabled) {
+                Core.info('Module ApiServer is not enabled');
+                resolve(this);
+            }
             this.koa.use(async (ctx, next) => {
                 try {
                     await next();
@@ -89,6 +95,7 @@ export class ApiServer {
 
 
 export interface ApiServerConfigInterface {
+    enabled: boolean;
     host: string;
     port: number;
     timeout: number;

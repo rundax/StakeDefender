@@ -75,6 +75,7 @@ export class ConfigFactory {
                 blockNotify: envBoolean('APP_BLOCKCHAIN_NOTIFY_NEW_BLOCK', true),
             },
             apiServer: {
+                enabled: envBoolean('APP_API_SERVER_ENABLED', false),
                 host: env('APP_API_SERVER_HOST', '*'),
                 port: parseInt(env('APP_API_SERVER_PORT', 3000), 10),
                 timeout: parseInt(env('APP_API_SERVER_REQUEST_TIMEOUT'), 10)
