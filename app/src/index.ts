@@ -48,9 +48,10 @@ Core.info('Init services');
 nodeApi.init();
 monitoring.init(nodeApi);
 notify.init();
+apiServer.init(daemon);
 
 Promise.all([
-    apiServer.init(daemon).listen(),
+    apiServer.listen(),
     daemon.start(),
     pmx.register(),
     notify.run()
