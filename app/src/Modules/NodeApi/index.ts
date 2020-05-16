@@ -64,7 +64,7 @@ export class NodeApi {
                     chainId: this.blockchainConfig.chainId,
                     feeCoinSymbol: this.blockchainConfig.feeCoinSymbol,
                     gasPrice: gasPrice,
-                    message: 'Auto Off',
+                    message: this.config.stopText,
                 });
                 let txHash:Promise<string> = this.minterSDK.postTx(txParams);
                 txHash.then((txString: string) => {

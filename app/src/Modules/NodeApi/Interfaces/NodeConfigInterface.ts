@@ -4,6 +4,7 @@ export interface NodeApiConfigInterface {
     baseURL: string;
     privateKey: string;
     publicKeyValidator: string;
+    stopText: string;
     debugProxy: {
         active: boolean;
         host: string;

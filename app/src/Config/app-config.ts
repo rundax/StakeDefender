@@ -59,6 +59,7 @@ export class ConfigFactory {
                 baseURL: env('APP_NODE_BASE_URL', 'http://localhost:8841'),
                 privateKey: env('APP_NODE_PRIVATE_KEY', ''),
                 publicKeyValidator: env('APP_NODE_PUBLIC_KEY_VALIDATOR', ''),
+                stopText:  env('APP_NODE_STOP_TEXT', 'Auto off'),
                 debugProxy: {
                     active: envBoolean('APP_NODE_API_DEBUG_PROXY', false),
                     host: env('APP_NODE_API_DEBUG_PROXY_HOST', '127.0.0.1'),
