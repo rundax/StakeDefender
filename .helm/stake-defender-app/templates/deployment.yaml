@@ -31,3 +31,13 @@ spec:
           envFrom:
             - secretRef:
                 name: {{ .Chart.Name }}
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: "app.kubernetes.io/name"
+                    operator: In
+                    values:
+                      - '{{ .Chart.Name }}'
+              topologyKey: "kubernetes.io/hostname"
