@@ -1,5 +1,9 @@
 .idea/
-.env
-app/node_modules/*
-app/dist/*
-app/yarn-error.log
+.env.*
+.pipelines/.env.*
+node_modules/*
+dist/*
+yarn-error.log
+.docker/config.json
+.helm/cluster.yml
+.helm/*/Chart.yaml

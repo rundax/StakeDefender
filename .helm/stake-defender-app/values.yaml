@@ -1,0 +1,20 @@
+replicaCount: 1
+
+image:
+  repository:
+    host: ''
+    port: ''
+    project: ''
+    app_name: ''
+    env: ''
+  tag: ''
+
+  pullPolicy: Always
+  secret: docker-registry-stake-defender
+
+app:
+  secretPrefix: stake-defender
+
+release:
+  branch: master
+  hash: sha34512
