@@ -104,7 +104,7 @@ interface StakeItem {
 }
 
 export interface ValidatorItemInterface {
-    pub_key: string;
+    public_key: string;
     voting_power: string;
 }
 
@@ -119,7 +119,7 @@ export interface BlockInfoInterface {
     size: string;
     proposer: string;
     transactions: TransactionItem[];
-    validators: {pub_key: string, signed:boolean}[];
+    validators: {public_key: string, signed:boolean}[];
 }
 
 interface TransactionItem {

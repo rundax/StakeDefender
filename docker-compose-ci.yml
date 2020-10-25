@@ -10,7 +10,6 @@ services:
       - ~/.cache/yarn:/home/node/.cache/yarn:rw
 
   redis:
-    container_name: ${PROJECT_NAME}_redis
     image: redis:4
     volumes:
       - redis_data:/data/:rw

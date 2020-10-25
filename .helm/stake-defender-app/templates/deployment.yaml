@@ -20,7 +20,7 @@ spec:
         app.kubernetes.io/name: {{ .Chart.Name }}
         app.kubernetes.io/instance: {{ .Release.Name }}
       annotations:
-        rollme: { { randAlphaNum 5 | quote } }
+        rollme: {{ randAlphaNum 5 | quote }}
     spec:
       imagePullSecrets:
         - name: {{ .Values.image.secret }}

@@ -153,7 +153,7 @@ export class NodeApi {
                     if (response === false) {
                         reject('Response is false');
                     }
-                    resolve(response.data);
+                    resolve(response.data.validators);
                 })
                 .catch((err) => {
                     Core.error('Can not get validators list from node', err.message, 'NodeApi');
@@ -164,7 +164,7 @@ export class NodeApi {
 
     public async getBlock(height: number): Promise<BlockInfoInterface> {
         return new Promise<BlockInfoInterface>((resolve, reject) => {
-            this.request('/block?height=' + height)
+            this.request('/block/' + height)
                 .then((response) => {
                 if (response === false) {
                     reject('Response is false');

@@ -38,11 +38,11 @@ export class SplashChecker {
                         let block: BlockInfoInterface;
                         [validators, block] = data;
                         let isValidator = validators.find( (item) => {
-                            return item.pub_key === this.config.publicKeyValidator;
+                            return item.public_key === this.config.publicKeyValidator;
                         });
                         if (isValidator !== undefined) {
                             let isSign = block.validators.find((item) => {
-                                return item.pub_key === this.config.publicKeyValidator && item.signed === true;
+                                return item.public_key === this.config.publicKeyValidator && item.signed === true;
                             });
                             if (isSign === undefined) {
                                 BlockStorage.addBlock(parseInt(block.height), block.hash, true);
