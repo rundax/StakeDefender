@@ -60,11 +60,13 @@ export class NodeApi {
             this.getMinGasPrice().then((gasPrice: number) => {
                 let txParams = {
                     type: TX_TYPE.SET_CANDIDATE_OFF,
+                    gasCoin: 0, // BIP id
+                    gasPrice: gasPrice,
                     data: {
                         publicKey: this.config.publicKeyValidator,
                     },
                 };
-                let txHash:Promise<string> = this.minterSDK.postTx(txParams, {gasRetryLimit: gasPrice, privateKey: this.config.privateKey});
+                let txHash:Promise<string> = this.minterSDK.postTx(txParams, {gasRetryLimit: 20, privateKey: this.config.privateKey});
                 txHash.then((txString: string) => {
                     Core.info('Send setCandidateOff. Transaction:', {tx: txString}, 'NodeApi');
                     Core.app().bus().emit(NodeApiEvents.setCandidateOffSuccess, {tx: txString});
@@ -115,7 +117,7 @@ export class NodeApi {
                 if (response === false) {
                     reject('Response is false');
                 }
-                resolve(parseInt(response.data));
+                resolve(parseInt(response.data.min_gas_price));
             }).catch((err) => {
                 Core.error('Can not get status from node', err);
                 reject(err);
