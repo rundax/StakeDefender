@@ -1,6 +1,11 @@
 apiVersion: v1
 description: Stake Defender is a tool to turn off your validator when it starts to miss blocks. Stake Defender includes components to monitor Minter node stability and notification services to keep node in a stable state. We recommend running several instances in different machines with different Minter Node API.
-name: stake-defender-__APP_NAME__
-version: 0.1.0
-#appVersion: {{ .Values.release.branch }}-{{ .Values.release.hash }}
+name: stake-defender
+version: 0.2.1
+appVersion: __APP_VERSION__
+maintainers:
+  - name: Andru Cherny
+    email: andrew@rundax.com
+    url: https://github.com/wirwolf
+
 

@@ -5,11 +5,6 @@ export interface NodeApiConfigInterface {
     privateKey: string;
     publicKeyValidator: string;
     stopText: string;
-    debugProxy: {
-        active: boolean;
-        host: string;
-        port: number;
-    };
 }
 
 export interface NetworkTypeInterface {

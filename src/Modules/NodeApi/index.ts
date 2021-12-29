@@ -41,13 +41,8 @@ export class NodeApi {
         axiosConfig.timeout = 10000;
         axiosConfig.responseType = 'json';
         axiosConfig.validateStatus = (status: number) => status >= 200 && status < 300;
-        if (this.config.debugProxy.active === true) {
-            axiosConfig.proxy = {
-                host: this.config.debugProxy.host,
-                port: this.config.debugProxy.port
-            };
-        }
         this.axiosClient = axios.create(axiosConfig);
+
         if (this.config.network === 'mainNet') {
             this.blockchainConfig = BLOCKCHAIN_CONFIG_MAINNET;
         } else {

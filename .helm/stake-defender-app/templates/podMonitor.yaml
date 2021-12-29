@@ -1,0 +1,16 @@
+{{ if $.Values.monitoring.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: {{ $.Release.Name }}
+spec:
+  podMetricsEndpoints:
+    - interval: 5s
+      port: prom-stats
+      path: /metrics
+  jobLabel: {{ $.Release.Name }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ $.Chart.Name }}
+      app.kubernetes.io/instance: {{ $.Release.Name }}
+{{- end }}

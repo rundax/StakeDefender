@@ -11,13 +11,18 @@ export DEV_ENV=dev
 
 #---------------DEV vars -------------
 export KUBE_NAMESPACE_PREFIX=stake-defender
-export KUBE_INGRESS_PATH=/
 export CI_PROJECT_NAME=stake-defender
 export ADMIN_EMAIL=root@localhost
 
 source .pipelines/.env
 if [ -f ".pipelines/.env.local" ]; then
     source .pipelines/.env.local
+fi
+
+if [ -f ".pipelines/.env.json" ]; then
+    for s in $(cat .pipelines/.env.json | jq -r "to_entries|map(\"\(.key)=\(.value|tostring)\")|.[]" ); do
+        export $s
+    done
 fi
 
 #import functions

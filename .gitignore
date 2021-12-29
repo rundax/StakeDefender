@@ -5,5 +5,8 @@ node_modules/*
 dist/*
 yarn-error.log
 .docker/config.json
+.docker/.buildNodeID
+.docker/.token_seed
+.docker/.token_seed.lock
 .helm/cluster.yml
 .helm/*/Chart.yaml

@@ -25,9 +25,6 @@
 | APP_NODE_BASE_URL             | string                    | http://localhost:8841 | Базоый URL для запроса к ноде                         |
 | APP_NODE_PUBLIC_KEY_VALIDATOR | string                    | пустая строка         | Публичный ключ для подписи транзакций setCandidateOff |
 | APP_NODE_PRIVATE_KEY          | string                    | пустая строка         | Приватный ключ для подписи транзакций setCandidateOff |
-| APP_NODE_API_DEBUG_PROXY      | boolean                   | false                 | Включение проксирования запросов к апи                |
-| APP_NODE_API_DEBUG_PROXY_HOST | string                    | 127.0.0.1             | Хост прокси сервера                                   |
-| APP_NODE_API_DEBUG_PROXY_PORT | number                    | 9000                  | Порт прокси сервера                                   |
 
 ## Модуль мониторинга
 | Название переменной                               | Тип                        | Значение по умолчанию | Описание                                                                            |

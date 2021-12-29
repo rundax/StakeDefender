@@ -5,7 +5,7 @@
   "scripts": {
     "start": "yarn build && yarn app",
     "build-dev": "webpack --mode development --progress ",
-    "build-pord": "webpack --no-color --mode production",
+    "build-prod": "webpack --no-color --mode production",
     "app": "/usr/local/bin/pm2-dev ./dist/app.js",
     "test": "mocha -r ts-node/register test/index.test.ts",
     "lint": "tslint -c tslint.json \\\"./src/**/*.ts\\\"",

@@ -1,6 +1,9 @@
 .idea
 .git
 .docker/config.json
+.docker/.buildNodeID
+.docker/.token_seed
+.docker/.token_seed.lock
 .helm/cluster.yml
 .gitlab-ci-functions
 .pipelines
@@ -15,6 +18,7 @@ docker-compose*
 Makefile
 LICENSE
 .editorconfig
-
-
-
+.github
+README.md
+docs
+.dockerignore

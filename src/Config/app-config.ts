@@ -51,11 +51,6 @@ export class ConfigFactory {
                 privateKey: env('APP_NODE_PRIVATE_KEY', ''),
                 publicKeyValidator: env('APP_NODE_PUBLIC_KEY_VALIDATOR', ''),
                 stopText:  env('APP_NODE_STOP_TEXT', 'Auto off'),
-                debugProxy: {
-                    active: envBoolean('APP_NODE_API_DEBUG_PROXY', false),
-                    host: env('APP_NODE_API_DEBUG_PROXY_HOST', '127.0.0.1'),
-                    port: envNumber('APP_NODE_API_DEBUG_PROXY_PORT', 9000, 10)
-                }
             },
             monitoring: {
                 splashChecker: {

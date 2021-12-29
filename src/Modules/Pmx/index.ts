@@ -18,12 +18,14 @@ export class Pmx {
         this.bus = Core.app().bus();
     }
 
-    public register() {
+    public register(): Promise<boolean|Pmx> {
         Core.debug('Register PMX events', [], 'PMX');
         this.registerMonitoringEvents();
 
         Core.debug('Register PMX metrics', [], 'PMX');
         this.registerMetric();
+
+        return Promise.resolve(this);
 
     }
 

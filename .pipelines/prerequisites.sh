@@ -21,9 +21,6 @@ try
       --from-literal=APP_NODE_BASE_URL="${APP_NODE_BASE_URL}" \
       --from-literal=APP_NODE_PUBLIC_KEY_VALIDATOR="${APP_NODE_PUBLIC_KEY_VALIDATOR}" \
       --from-literal=APP_NODE_PRIVATE_KEY="${APP_NODE_PRIVATE_KEY}" \
-      --from-literal=APP_NODE_API_DEBUG_PROXY="${APP_NODE_API_DEBUG_PROXY}" \
-      --from-literal=APP_NODE_API_DEBUG_PROXY_HOST="${APP_NODE_API_DEBUG_PROXY_HOST}" \
-      --from-literal=APP_NODE_API_DEBUG_PROXY_PORT="${APP_NODE_API_DEBUG_PROXY_PORT}" \
       --from-literal=APP_NODE_STOP_TEXT="${APP_NODE_STOP_TEXT}" \
       \
       --from-literal=APP_MONITORING_SPLASH_CHECKER_ENABLED="${APP_MONITORING_SPLASH_CHECKER_ENABLED}" \
@@ -38,8 +35,6 @@ try
       --from-literal=APP_NOTIFY_TELEGRAM_TOKEN="${APP_NOTIFY_TELEGRAM_TOKEN}" \
       \
   -o yaml --dry-run | ${KUBECTL} -n ${KUBE_NAMESPACE} replace --force -f -
-
-  namespace_secret_acme_cert ingress-cert ${KUBE_INGRESS_CERT_HOSTNAME}
 )
 # directly after closing the subshell you need to connect a group to the catch using ||
 catch || {

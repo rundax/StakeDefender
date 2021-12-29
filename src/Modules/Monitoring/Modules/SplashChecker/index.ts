@@ -5,6 +5,7 @@ import {BlockInfoInterface, ValidatorItemInterface} from '../../../NodeApi/Inter
 import {EventBusInterface} from '@elementary-lab/standards/src/EventBusInterface';
 import {SimpleEventBus} from '@elementary-lab/events/src/SimpleEventBus';
 import {BlockSkippedData, SplashCheckerEvents, SplashCheckpoint} from './Events';
+import {NodeEvents} from '../../../NodeProcess/Events';
 
 /**
  *
@@ -30,7 +31,7 @@ export class SplashChecker {
             Core.warn('Module is not enabled in config file', [], 'SplashChecker');
             return;
         }
-        this.bus.on('node.newBlock', (height: number) => {
+        this.bus.on(NodeEvents.NEW_BLOCK, (height: number) => {
             setTimeout(() => {
                 Promise.all([this.nodeApi.getValidators(height), this.nodeApi.getBlock(height)])
                     .then((data) => {

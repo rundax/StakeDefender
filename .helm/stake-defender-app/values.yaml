@@ -1,20 +1,90 @@
 replicaCount: 1
 
 image:
-  repository:
-    host: ''
-    port: ''
-    project: ''
-    app_name: ''
-    env: ''
-  tag: ''
-
+  registry: "null:5001"
+  repository: null-value
+  tag: null-value
+  hash: null-value
   pullPolicy: Always
-  secret: docker-registry-stake-defender
+
+  ## Optional array of imagePullSecrets containing private registry credentials
+  ## Ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+  pullSecrets: []
+  # - name: secretName
 
 app:
-  secretPrefix: stake-defender
+  envSecrets: {}
+  externalSecrets: []
 
-release:
-  branch: master
-  hash: sha34512
+metadata:
+  deployedBy: null-value
+  piplineUrl: null-value
+
+monitoring:
+  enabled: true
+
+resources:
+  enabled: true
+  limits:
+    cpu: 300m
+    memory: 650Mi
+
+  requests:
+    cpu: 150m
+    memory: 350Mi
+
+
+podSecurityContext:
+  enabled: true
+  fsGroup: 1000
+  runAsUser: 1000
+
+
+## Configure extra options for liveness probe
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
+## @param primary.livenessProbe.enabled Enable livenessProbe
+## @param primary.livenessProbe.initialDelaySeconds Initial delay seconds for livenessProbe
+## @param primary.livenessProbe.periodSeconds Period seconds for livenessProbe
+## @param primary.livenessProbe.timeoutSeconds Timeout seconds for livenessProbe
+## @param primary.livenessProbe.failureThreshold Failure threshold for livenessProbe
+## @param primary.livenessProbe.successThreshold Success threshold for livenessProbe
+##
+livenessProbe:
+  enabled: false
+  initialDelaySeconds: 2
+  periodSeconds: 10
+  timeoutSeconds: 1
+  failureThreshold: 3
+  successThreshold: 1
+## Configure extra options for readiness probe
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
+## @param primary.readinessProbe.enabled Enable readinessProbe
+## @param primary.readinessProbe.initialDelaySeconds Initial delay seconds for readinessProbe
+## @param primary.readinessProbe.periodSeconds Period seconds for readinessProbe
+## @param primary.readinessProbe.timeoutSeconds Timeout seconds for readinessProbe
+## @param primary.readinessProbe.failureThreshold Failure threshold for readinessProbe
+## @param primary.readinessProbe.successThreshold Success threshold for readinessProbe
+##
+readinessProbe:
+  enabled: false
+  initialDelaySeconds: 5
+  periodSeconds: 10
+  timeoutSeconds: 1
+  failureThreshold: 3
+  successThreshold: 1
+## Configure extra options for startupProbe probe
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
+## @param primary.startupProbe.enabled Enable startupProbe
+## @param primary.startupProbe.initialDelaySeconds Initial delay seconds for startupProbe
+## @param primary.startupProbe.periodSeconds Period seconds for startupProbe
+## @param primary.startupProbe.timeoutSeconds Timeout seconds for startupProbe
+## @param primary.startupProbe.failureThreshold Failure threshold for startupProbe
+## @param primary.startupProbe.successThreshold Success threshold for startupProbe
+##
+startupProbe:
+  enabled: false
+  initialDelaySeconds: 2
+  periodSeconds: 10
+  timeoutSeconds: 1
+  failureThreshold: 10
+  successThreshold: 1
