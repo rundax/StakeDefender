@@ -1,13 +1,14 @@
 version: "3.7"
 services:
   app:
-    image: ${DOCKER_SERVER_HOST}/${DOCKER_PROJECT_PATH}/node${DOCKER_NODE_VERSION}-base:${DOCKER_IMAGE_VERSION}
+    image: ${DOCKER_SERVER_HOST}/${DOCKER_PROJECT_PATH}/node${DOCKER_NODE_VERSION}-yarn:${DOCKER_IMAGE_VERSION}
     stop_signal: INT
     user: 1000:1000
+    working_dir: /app
     tty: true
     volumes:
       - ./:/app:rw
-      - ~/.cache/yarn:/home/node/.cache/yarn:rw
+      - ~/.cache/yarn:/.cache/yarn:rw
 
   redis:
     container_name: ${PROJECT_NAME}_redis
