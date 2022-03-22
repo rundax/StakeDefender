@@ -41,7 +41,7 @@ spec:
           imagePullPolicy: {{ $.Values.image.pullPolicy }}
           ports:
             - name: prom-stats
-              containerPort: 26660
+              containerPort: 9209
 
           {{- if $.Values.resources.enabled }}
           resources: {{- omit $.Values.resources "enabled" | toYaml | nindent 12 }}
